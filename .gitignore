@@ -1,7 +1,14 @@
+### PyCharm files
 .idea
 
+### Binary files
 __pycache__
 
+### Virtual environment packages
 venv
 
+### Pythom compiled files
 *.pyc
+
+### VS Code config files
+.vscode
