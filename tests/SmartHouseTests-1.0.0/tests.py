@@ -12,7 +12,8 @@ from monitor.monitor import Monitor
 from monitor.message_service import MessageServer
 from monitor.config import Config
 
-#create monitor from config.yaml
+
+# create monitor from config.yaml
 class A(object):
     def __init__(self):
         self._thread_a = threading.Thread(target=self.do_a)
@@ -25,7 +26,8 @@ class A(object):
     def stop(self, timeout):
         self._thread_a.join(timeout)
 
-#create monitor from config_test.yaml
+
+# create monitor from config_test.yaml
 class B(object):
     def __init__(self):
         self._thread_a = threading.Thread(target=self.do_a)
@@ -38,9 +40,11 @@ class B(object):
     def stop(self, timeout):
         self._thread_a.join(timeout)
 
+
 @pytest.fixture()
 def a():
     return A()
+
 
 @pytest.fixture()
 def b():
@@ -48,128 +52,151 @@ def b():
     return _tester
 
 
-
 def test_read_config_address():
     conf = Config('config.yaml')
     assert (conf.server.address == 'localhost')
 
+
 def test_read_config_port():
     conf = Config('config.yaml')
     assert (conf.server.port == 50000)
+
 
 def test_read_config_sensor_type():
     conf = Config('config.yaml')
     assert (conf.find_sensor_type('kettle').type == 'kettle')
     assert (conf.find_sensor_type('router').type == 'router')
 
+
 def test_read_config_sensor_timeout():
     conf = Config('config.yaml')
     assert (conf.find_sensor_type('kettle').timeout == 8)
     assert (conf.find_sensor_type('router').timeout == 12)
 
+
 def test_read_config_sensor_unknown_type():
     conf = Config('config.yaml')
     assert (conf.find_sensor_type('unknown') is None)
+
 
 def test_read_anpther_config_address():
     conf = Config('config_test.yaml')
     assert (conf.server.address == '127.0.0.1')
 
+
 def test_read_anpther_config_port():
     conf = Config('config_test.yaml')
     assert (conf.server.port == 40000)
+
 
 def test_read_anpther_config_sensor_type():
     conf = Config('config_test.yaml')
     assert (conf.find_sensor_type('new_sensor').type == 'new_sensor')
 
-#error
+
+# error
 def test_read_anpther_config_sensor_timeout():
     conf = Config('config_test.yaml')
     assert (conf.find_sensor_type('kettle').timeout == 2)
     assert (conf.find_sensor_type('router').timeout == 12)
 
+
 def test_read_anpther_config_sensor_unknown_type():
     conf = Config('config_test.yaml')
     assert (conf.find_sensor_type('unknown') is None)
 
-#error
+
+# error
 def test_read_config_empty_adreess_address():
     conf = Config('config_empty_adress.yaml')
     assert (conf.server.address is None)
 
-#error
+
+# error
 def test_read_config_empty_adreess_port():
     conf = Config('config_empty_adress.yaml')
     assert (conf.server.port is None)
 
-#error
+
+# error
 def test_read_config_empty_adreess_type():
     conf = Config('config_empty_adress.yaml')
     assert (conf.find_sensor_type('router').type == 'router')
 
-#error
+
+# error
 def test_read_config_empty_adreess_timeout():
     conf = Config('config_empty_adress.yaml')
     assert (conf.find_sensor_type('router').timeout == 12)
 
-#error
+
+# error
 def test_read_config_empty_sensors_address():
     conf = Config('config_empty_sensors.yaml')
     assert (conf.server.address == 'localhost')
 
-#error
+
+# error
 def test_read_config_empty_sensors_port():
     conf = Config('config_empty_sensors.yaml')
     assert (conf.server.port == 40000)
 
-#error
+
+# error
 def test_read_config_empty_sensors():
     conf = Config('config_empty_sensors.yaml')
     assert (conf.sensors is None)
 
-#error
+
+# error
 def test_read_config_empty_config_address():
     conf = Config('config_empty_config.yaml')
     assert (conf.server.address is None)
 
-#error
+
+# error
 def test_read_config_empty_config_port():
     conf = Config('config_empty_config.yaml')
     assert (conf.server.port is None)
 
-#error
+
+# error
 def test_read_config_empty_config_sensors():
     conf = Config('config_empty_config.yaml')
     assert (conf.sensors is None)
 
+
 def test_make_server_check_address():
     conf = Config('config.yaml')
     server = MessageServer(conf.server.address,
-                            conf.server.port,
-                            MessageHandler)
+                           conf.server.port,
+                           MessageHandler)
     assert (server.addr[0] == 'localhost')
+
 
 def test_make_server_check_port():
     conf = Config('config.yaml')
     server = MessageServer(conf.server.address,
-                            conf.server.port,
-                            MessageHandler)
+                           conf.server.port,
+                           MessageHandler)
     assert (server.addr[1] == 50000)
+
 
 def test_make_server_from_test_conf_check_address():
     conf = Config('config_test.yaml')
     server = MessageServer(conf.server.address,
-                            conf.server.port,
-                            MessageHandler)
+                           conf.server.port,
+                           MessageHandler)
     assert (server.addr[0] == '127.0.0.1')
+
 
 def test_make_server_from_test_conf_check_port():
     conf = Config('config_test.yaml')
     server = MessageServer(conf.server.address,
-                            conf.server.port,
-                            MessageHandler)
+                           conf.server.port,
+                           MessageHandler)
     assert (server.addr[1] == 40000)
+
 
 def test_register_sensor(a):
     a
@@ -188,6 +215,7 @@ def test_register_sensor(a):
 
     a.stop(timeout=0)
 
+
 def test_unregister_sensor(a):
     a
 
@@ -204,6 +232,7 @@ def test_unregister_sensor(a):
     assert (0 == len(MessageHandler._sensors))
 
     a.stop(timeout=0)
+
 
 def test_status_sensor(a):
     a
@@ -224,7 +253,8 @@ def test_status_sensor(a):
 
     a.stop(timeout=0)
 
-#error sometimes
+
+### Windows: error sometimes
 def test_status_from_online_to_offline_sensor(a):
     a
 
@@ -251,7 +281,8 @@ def test_status_from_online_to_offline_sensor(a):
 
     a.stop(timeout=0)
 
-#error_sometimes
+
+# error_sometimes
 def test_update_sensor(a):
     a
 
@@ -275,6 +306,7 @@ def test_update_sensor(a):
 
     a.stop(timeout=0)
 
+
 def test_check_type_router(a):
     a
 
@@ -295,6 +327,7 @@ def test_check_type_router(a):
 
     pass
 
+
 def test_check_type_kettle(a):
     a
 
@@ -313,7 +346,8 @@ def test_check_type_kettle(a):
 
     a.stop(timeout=0)
 
-#error
+
+# error
 def test_check_newtype(b):
     b
 
@@ -331,7 +365,8 @@ def test_check_newtype(b):
 
     b.stop(timeout=0)
 
-#error
+
+# error
 def test_empty_type(a):
     a
 
@@ -349,7 +384,8 @@ def test_empty_type(a):
 
     a.stop(timeout=0)
 
-#error
+
+# error
 def test_int_type(a):
     a
 
@@ -367,6 +403,7 @@ def test_int_type(a):
 
     a.stop(timeout=0)
 
+
 def test_update_unreg_sensor(a):
     a
 
@@ -379,6 +416,7 @@ def test_update_unreg_sensor(a):
 
     a.stop(timeout=0)
 
+
 def test_unreg_unreg_sensor(a):
     a
 
@@ -390,6 +428,7 @@ def test_unreg_unreg_sensor(a):
     sock.send(message)
 
     a.stop(timeout=0)
+
 
 def test_empty_message(a):
     a
@@ -405,6 +444,7 @@ def test_empty_message(a):
     assert (0 == len(MessageHandler._sensors))
 
     a.stop(timeout=0)
+
 
 def test_signed_register_id(a):
     a
@@ -427,6 +467,7 @@ def test_signed_register_id(a):
 
     a.stop(timeout=0)
 
+
 def test_signed_register_id(a):
     a
 
@@ -447,7 +488,8 @@ def test_signed_register_id(a):
 
     a.stop(timeout=0)
 
-def test_incorrect_id(a): #error
+
+def test_incorrect_id(a):  # error
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -462,7 +504,8 @@ def test_incorrect_id(a): #error
 
     a.stop(timeout=0)
 
-#error
+
+# error
 def test_double_sensosrs_(a):
     a
 
