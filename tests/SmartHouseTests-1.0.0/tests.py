@@ -1,12 +1,17 @@
-from config import Config
-from message_service import MessageServer
-from monitor import MessageHandler
-from monitor import Monitor
 import time
 import sys
 import socket
-
 import threading
+
+# Add the folder path to the sys.path list
+# sys.path.append('../../code/SmartHouse-1.0.0/monitor')
+sys.path.append('../../code/SmartHouse-1.0.0/')
+
+from monitor.monitor import MessageHandler
+from monitor.monitor import Monitor
+from monitor.message_service import MessageServer
+from monitor.config import Config
+
 
 class StoppableThread(threading.Thread):
     """Thread class with a stop() method. The thread itself has to check
@@ -28,22 +33,24 @@ def test_read_config():
     assert (conf.server.address == 'localhost')
     assert (conf.server.port == 50000)
 
+
 def test_make_server():
     conf = Config('config.yaml')
     server = MessageServer(conf.server.address,
-                            conf.server.port,
-                            MessageHandler)
+                           conf.server.port,
+                           MessageHandler)
     assert (server.addr[0] == 'localhost')
     assert (server.addr[1] == 50000)
 
     return server
+
 
 def test_make_sensor():
     t = threading.Thread(target=worker, args=())
     t.start()
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', 50001))
+    sock.bind(('', 50002))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"router","id":"1", "status":"online"}}'
     sock.send(message)
@@ -58,6 +65,7 @@ def test_make_sensor():
     assert (0 == len(MessageHandler._sensors))
 
     pass
+
 
 def test_update_sensor():
 
@@ -84,6 +92,7 @@ def test_update_sensor():
 
 def worker():
     Monitor('config.yaml').run()
+
 
 if __name__ == "__main__":
     test_read_config()

@@ -1,7 +1,0 @@
-server:
-  address: "localhost:50000"
-sensors:
-  - type: kettle
-    timeout: 8
-  - type: router
-    timeout: 12
