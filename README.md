@@ -1,5 +1,8 @@
-# xgboosters
+# Команда xgboosters
 
+Хакатон **Nexign Hack 2018**. Тема QA.
+
+---
 
 ## Структура проекта
 
