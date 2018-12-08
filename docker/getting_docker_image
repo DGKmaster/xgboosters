@@ -1,0 +1,4 @@
+sudo apt install docker-ce
+sudo usermod -aG docker $(whoami)  
+
+sudo docker pull ubuntu
