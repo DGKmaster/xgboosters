@@ -90,3 +90,4 @@ if __name__ == "__main__":
     test_make_server()
     test_make_sensor()
     test_update_sensor()
+    sys.exit(0)
