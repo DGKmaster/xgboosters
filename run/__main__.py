@@ -54,7 +54,7 @@ messages = [[message1_1, message1_2, message1_3],
 
 
 if __name__ == "__main__":
-    for i in range(0, 5):
+    for i in range(1,2):
         t = threading.Thread(target=worker, args=(messages[i][0], messages[i][1], messages[i][2], 6605 + i, i))
         t.start()
 
