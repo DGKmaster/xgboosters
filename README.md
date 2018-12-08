@@ -1,5 +1,18 @@
 # xgboosters
 
+## Создание пакета
+
+1. Создаем пакет
+```bash
+~$ python3 setup.py sdist
+```
+2. Устанавливаем пакет в ```lib/python3.7/site-packages```
+```bash
+~$ pip3 install dist/smarthouse-1.0.0.tar.gz
+```
+
+---
+
 ## Features list
 
 * **Feature-1**
