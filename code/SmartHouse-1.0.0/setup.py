@@ -1,36 +1,26 @@
-from setuptools import *
-
+from setuptools import setup, find_packages
 
 PACKAGE = "SmartHouse"
-NAME = "SmartHouse"
+NAME = "smarthouse"
 DESCRIPTION = ""
 AUTHOR = "sgb"
 AUTHOR_EMAIL = ""
 URL = ""
 VERSION = "1.0.0"
  
+with open('releasenotes.txt', 'r') as rn:
+    releasenotes = rn.read()  
+
 setup(
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
-    #long_description=read("releasenotes.txt"),
+    long_description=releasenotes,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     license="BSD",
     url=URL,
     packages=find_packages(exclude=["tests.*", "tests"]),
-    #package_data=find_package_data(
-    #        PACKAGE,
-    #        only_in_packages=False
-    #  ),
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Environment :: Web Environment",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: BSD License",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python",
-        "Framework :: Django",
-    ],
     zip_safe=False,
 )
+

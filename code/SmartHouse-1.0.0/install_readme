@@ -1,0 +1,5 @@
+# делаем пакет
+python setup.py sdist
+
+# устанавливаем в lib/python3.N/site-packages
+pip install dist/smarthouse-1.0.0.tar.gz
