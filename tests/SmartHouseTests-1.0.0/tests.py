@@ -230,12 +230,8 @@ def test_status_from_online_to_offline_sensor(a):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-<<<<<<< HEAD
-    sock.bind(('localhost', 50001))
 
-=======
     sock.bind(('localhost', 50004))
->>>>>>> sergey
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"kettle","id":"1", "status":"online"}}'
     sock.send(message)
