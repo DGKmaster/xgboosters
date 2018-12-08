@@ -224,6 +224,7 @@ def test_status_sensor(a):
 
     a.stop(timeout=0)
 
+#error sometimes
 def test_status_from_online_to_offline_sensor(a):
     a
 
