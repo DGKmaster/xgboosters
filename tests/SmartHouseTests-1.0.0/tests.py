@@ -34,6 +34,23 @@ def test_read_config_another():
     assert (conf.find_sensor_type('new_sensor').timeout == 2)
     assert (conf.find_sensor_type('router').timeout == 12)
 
+def test_read_config_empty_adreess(): #error
+    conf = Config('config_empty_adress.yaml')
+    assert (conf.server.address is None)
+    assert (conf.server.port is None)
+    assert (conf.find_sensor_type('router').type == 'router')
+
+def test_read_config_empty_sensors(): #error
+    conf = Config('config_empty_sensors.yaml')
+    assert (conf.server.address == 'localhost')
+    assert (conf.server.port == 40000)
+    assert (conf.sensors is None)
+
+def test_read_config_empty_config(): #error
+    conf = Config('config_empty_config.yaml')
+    assert (conf.server.address is None)
+    assert (conf.server.port is None)
+    assert (conf.sensors is None)
 
 def test_make_server():
     conf = Config('config.yaml')

@@ -1,5 +1,5 @@
 server:
-  address: "127.0.0.1:40000"
+  address: ""
 sensors:
   - type: new_sensor
     timeout: 2
