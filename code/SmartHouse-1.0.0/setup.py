@@ -1,4 +1,4 @@
-from setuptools import *
+from setuptools import setup, find_packages
 
 
 PACKAGE = "SmartHouse"
