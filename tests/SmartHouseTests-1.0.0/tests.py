@@ -98,9 +98,8 @@ def test_make_sensor(a):
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # sock.bind(('localhost', 50001))
+    sock.bind(('localhost', 50001))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"router","id":"1", "status":"online"}}'
     sock.send(message)
@@ -119,7 +118,7 @@ def test_make_sensor(a):
     pass
 
 
-def test_update_sensor(a):
+def test_update_sensor(a): #error_sometimes
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -129,7 +128,12 @@ def test_update_sensor(a):
     message = b'{"message_type":"register","payload":{"type":"kettle","id":"1", "status":"online"}}'
     sock.send(message)
 
+    time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
+    assert ('online' == MessageHandler._sensors['1'].status)
+
     time.sleep(12)
+    assert (1 == len(MessageHandler._sensors))
     assert ('offline' == MessageHandler._sensors['1'].status)
 
     message = b'{"message_type":"update","payload":{"type":"kettle","id":"1", "status":"online"}}'
@@ -154,6 +158,7 @@ def test_check_type_router(a):
     sock.send(message)
 
     time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
     assert ("router" == MessageHandler._sensors['3'].type)
 
     message = b'{"message_type":"unregister","payload":{"type":"router","id":"3", "status":"online"}}'
@@ -174,6 +179,7 @@ def test_check_type_kettle(a):
     sock.send(message)
 
     time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
     assert ("kettle" == MessageHandler._sensors['4'].type)
 
     message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"4", "status":"online"}}'
@@ -182,11 +188,11 @@ def test_check_type_kettle(a):
     a.stop(timeout=0)
 
 
-def test_check_newtype(b):
+def test_check_newtype(b): #error
     b
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', 50004))
+    sock.bind(('', 50005))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"kettle","id":"4", "status":"online"}}'
     sock.send(message)
@@ -199,24 +205,8 @@ def test_check_newtype(b):
 
     b.stop(timeout=0)
 
-def test_empty_type(a):
-    a
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', 50005))
-    sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"","id":"4", "status":"online"}}'
-    sock.send(message)
-
-    time.sleep(1)
-    assert ("" == MessageHandler._sensors['4'].type)
-
-    message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"4", "status":"online"}}'
-    sock.send(message)
-
-    a.stop(timeout=0)
-
-def test_empty_type(a):
+def test_empty_type(a): #error
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -233,7 +223,7 @@ def test_empty_type(a):
 
     a.stop(timeout=0)
 
-def test_int_type(a):
+def test_int_type(a): #error
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -284,7 +274,11 @@ def test_empty_message(a):
     message = b''
     sock.send(message)
 
+    time.sleep(1)
+    assert (0 == len(MessageHandler._sensors))
+
     a.stop(timeout=0)
+
 
 def test_signed_id(a):
     a
@@ -296,11 +290,55 @@ def test_signed_id(a):
     message = b'{"message_type":"register","payload":{"type":"","id":"-14", "status":"online"}}'
     sock.send(message)
 
+    time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
 
     message = b'{"message_type":"unregister","payload":{"type":"","id":"-14", "status":"online"}}'
     sock.send(message)
 
+    time.sleep(1)
+    assert (0 == len(MessageHandler._sensors))
+
     a.stop(timeout=0)
+
+def test_incorrect_id(a): #error
+    a
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(('', 50012))
+    sock.connect(('localhost', 50000))
+
+    message = b'gdfagadfgadfg'
+    sock.send(message)
+
+    time.sleep(1)
+    assert (0 == len(MessageHandler._sensors))
+
+    a.stop(timeout=0)
+
+
+def test_double_sensosrs_(a):
+    a
+
+    sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock1.bind(('', 50013))
+    sock1.connect(('localhost', 50000))
+
+    message = b'{"message_type":"register","payload":{"type":"kettle","id":"4", "status":"online"}}'
+    sock1.send(message)
+
+    sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock2.bind(('', 50014))
+    sock2.connect(('localhost', 50000))
+
+    message2 = b'{"message_type":"register","payload":{"type":"router","id":"5", "status":"online"}}'
+    sock2.send(message2)
+
+    time.sleep(1)
+    assert (2 == len(MessageHandler._sensors))
+
+    a.stop(timeout=0)
+
 
 if __name__ == "__main__":
     test_read_config()
