@@ -1,0 +1,2 @@
+recursive-include . *
+#exclude setup.py
