@@ -1,7 +1,7 @@
 server:
   address: "127.0.0.1:40000"
 sensors:
-  - type: kettle
-    timeout: 8
+  - type: new_sensor
+    timeout: 2
   - type: router
     timeout: 12
