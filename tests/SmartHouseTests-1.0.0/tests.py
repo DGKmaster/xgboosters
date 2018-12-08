@@ -100,6 +100,9 @@ def test_make_sensor(a):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     sock.bind(('localhost', 50001))
+    sock.set_reuse_addr()
+
+    # sock.bind(('localhost', 50001))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"router","id":"1", "status":"online"}}'
     sock.send(message)
