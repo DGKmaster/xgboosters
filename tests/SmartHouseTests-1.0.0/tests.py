@@ -1,11 +1,16 @@
-from config import Config
-from message_service import MessageServer
-from monitor import MessageHandler
-from monitor import Monitor
 import time
+import sys
 import socket
-import pytest
 import threading
+import pytest
+
+from monitor.monitor import MessageHandler
+from monitor.monitor import Monitor
+from monitor.message_service import MessageServer
+from monitor.config import Config
+
+# Add the folder path to the sys.path list
+sys.path.append('../../code/SmartHouse-1.0.0/')
 
 
 def test_read_config():
@@ -17,6 +22,7 @@ def test_read_config():
     assert (conf.find_sensor_type('kettle').timeout == 8)
     assert (conf.find_sensor_type('router').timeout == 12)
     assert (conf.find_sensor_type('unknown') is None)
+
 
 def test_read_config_another():
     conf = Config('config_test.yaml')
@@ -37,6 +43,7 @@ def test_make_server():
 
     return server
 
+
 def test_make_server_from_test_conf():
     conf = Config('config_test.yaml')
     server = MessageServer(conf.server.address,
@@ -46,6 +53,7 @@ def test_make_server_from_test_conf():
     assert (server.addr[1] == 40000)
 
     return server
+
 
 class A(object):
     def __init__(self):
@@ -59,6 +67,7 @@ class A(object):
     def stop(self, timeout):
         self._thread_a.join(timeout)
 
+
 class B(object):
     def __init__(self):
         self._thread_a = threading.Thread(target=self.do_a)
@@ -71,20 +80,25 @@ class B(object):
     def stop(self, timeout):
         self._thread_a.join(timeout)
 
+
 @pytest.fixture()
 def a():
     return A()
+
 
 @pytest.fixture()
 def b():
     _tester = B()
     return _tester
 
+
 def test_make_sensor(a):
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', 50001))
+    # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # sock.bind(('localhost', 50001))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"router","id":"1", "status":"online"}}'
     sock.send(message)
@@ -102,11 +116,13 @@ def test_make_sensor(a):
 
     pass
 
+
 def test_update_sensor(a):
     a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', 50002))
+
+    sock.bind(('localhost', 50002))
     sock.connect(('localhost', 50000))
     message = b'{"message_type":"register","payload":{"type":"kettle","id":"1", "status":"online"}}'
     sock.send(message)
@@ -124,6 +140,7 @@ def test_update_sensor(a):
     sock.send(message)
 
     a.stop(timeout=0)
+
 
 def test_check_type_router(a):
     a
@@ -144,6 +161,7 @@ def test_check_type_router(a):
 
     pass
 
+
 def test_check_type_kettle(a):
     a
 
@@ -160,6 +178,7 @@ def test_check_type_kettle(a):
     sock.send(message)
 
     a.stop(timeout=0)
+
 
 def test_check_type_kettle(a):
     a
@@ -178,8 +197,10 @@ def test_check_type_kettle(a):
 
     a.stop(timeout=1)
 
+
 def worker():
     Monitor('config.yaml').run()
+
 
 if __name__ == "__main__":
     test_read_config()
