@@ -14,7 +14,7 @@ def test_make_server():
                             conf.server.port,
                             MessageHandler)
     assert (server.addr[0] == 'localhost')
-    assert (server.addr[1] == 50000)
+    assert (server.addr[1] == 50000)    
 
 
 if __name__ == "__main__":
