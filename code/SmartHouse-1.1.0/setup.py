@@ -1,3 +1,5 @@
+
+
 from setuptools import setup, find_packages
 
 PACKAGE = "SmartHouse"
@@ -6,9 +8,9 @@ DESCRIPTION = ""
 AUTHOR = "sgb"
 AUTHOR_EMAIL = ""
 URL = ""
-VERSION = "1.0.0"
+VERSION = "1.1.0"
  
-with open('releasenotes.txt', 'r', encoding='utf-8') as rn:
+with open('releasenotes.txt', 'r', encoding="utf-8") as rn:
     releasenotes = rn.read()  
 
 setup(
