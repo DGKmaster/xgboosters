@@ -1,14 +1,20 @@
-from config import Config
-from message_service import MessageServer
-from monitor import MessageHandler
-from monitor import Monitor
 import time
+import sys
 import socket
-import pytest
 import threading
+import pytest
+
+# Add the folder path to the sys.path list
+# sys.path.append('../../code/SmartHouse-1.0.0/monitor')
+sys.path.append('../../code/SmartHouse-1.0.0/')
+
+from monitor.monitor import MessageHandler
+from monitor.monitor import Monitor
+from monitor.message_service import MessageServer
+from monitor.config import Config
 
 
-def test_read_config():
+ef test_read_config():
     conf = Config('config.yaml')
     assert (conf.server.address == 'localhost')
     assert (conf.server.port == 50000)
