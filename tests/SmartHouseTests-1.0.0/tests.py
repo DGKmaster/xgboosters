@@ -13,8 +13,6 @@ from monitor.message_service import MessageServer
 from monitor.config import Config
 
 
-
-
 def test_read_config():
     conf = Config('config.yaml')
     assert (conf.server.address == 'localhost')
