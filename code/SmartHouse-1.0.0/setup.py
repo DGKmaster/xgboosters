@@ -8,7 +8,7 @@ AUTHOR_EMAIL = ""
 URL = ""
 VERSION = "1.0.0"
  
-with open('releasenotes.txt', 'r') as rn:
+with open('releasenotes.txt', 'r', encoding='utf-8') as rn:
     releasenotes = rn.read()  
 
 setup(
