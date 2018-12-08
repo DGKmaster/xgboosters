@@ -1,7 +1,7 @@
 server:
   address: "127.0.0.1:40000"
 sensors:
-  - type: refrigerator
-    timeout: 10
+  - type: kettle
+    timeout: 8
   - type: router
-    timeout: 6
+    timeout: 12

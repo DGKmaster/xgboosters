@@ -39,24 +39,25 @@ def test_make_server_from_test_conf():
 
     return server
 
-class StoppableThread(threading.Thread):
-    """Thread class with a stop() method. The thread itself has to check
-    regularly for the stopped() condition."""
-
+class A(object):
     def __init__(self):
-        super(StoppableThread, self).__init__()
-        self._stop_event = threading.Event()
+        self._thread_a = threading.Thread(target=self.do_a)
+        self._thread_a.daemon = True
+        self._thread_a.start()
 
-    def stop(self):
-        self._stop_event.set()
+    def do_a(self):
+        Monitor('config.yaml').run()
 
-    def stopped(self):
-        return self._stop_event.is_set()
+    def stop(self, timeout):
+        self._thread_a.join(timeout)
 
-def test_make_sensor():
-    trd = threading.Thread(target=worker, args=())
-    stop_trd = StoppableThread(trd)
-    stop_trd.start()
+@pytest.fixture()
+def a():
+    return A()
+
+
+def test_make_sensor(a):
+    a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('', 50001))
@@ -73,13 +74,12 @@ def test_make_sensor():
     time.sleep(1)
     assert (0 == len(MessageHandler._sensors))
 
-    stop_trd.stop()
+    a.stop(timeout=1)
 
     pass
 
-def test_update_sensor():
-    trd = Process(target=worker, args=())
-    trd.start()
+def test_update_sensor(a):
+    a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('', 50002))
@@ -87,7 +87,7 @@ def test_update_sensor():
     message = b'{"message_type":"register","payload":{"type":"kettle","id":"1", "status":"online"}}'
     sock.send(message)
 
-    time.sleep(9)
+    time.sleep(12)
     assert ('offline' == MessageHandler._sensors['1'].status)
 
     message = b'{"message_type":"update","payload":{"type":"kettle","id":"1", "status":"online"}}'
@@ -99,11 +99,10 @@ def test_update_sensor():
     message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"1", "status":"online"}}'
     sock.send(message)
 
-    trd.terminate()
+    a.stop(timeout=1)
 
-def test_check_type_router():
-    trd = Process(target=worker, args=())
-    trd.start()
+def test_check_type_router(a):
+    a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('', 50003))
@@ -117,13 +116,12 @@ def test_check_type_router():
     message = b'{"message_type":"unregister","payload":{"type":"router","id":"3", "status":"online"}}'
     sock.send(message)
 
-    trd.terminate()
+    a.stop(timeout=1)
 
     pass
 
-def test_check_type_kettle():
-    trd = Process(target=worker, args=())
-    trd.start()
+def test_check_type_kettle(a):
+    a
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('', 50004))
@@ -137,7 +135,7 @@ def test_check_type_kettle():
     message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"4", "status":"online"}}'
     sock.send(message)
 
-    trd.terminate()
+    a.stop(timeout=1)
 
 
 def worker():
