@@ -14,7 +14,7 @@ services:
 
 before_install:
   - docker pull ubuntu
-  - docker build -t docker_1 ~/
+  - docker build -t docker_1 .
 
 
 # Установка фактически разбита на два этапа: 
