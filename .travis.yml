@@ -24,7 +24,8 @@ before_install:
 
 script:
   - pip3 install pytest
-  - pytest SmartHouseTests-1.0.0/
+  - cd tests/SmartHouseTests-1.0.0
+  - pytest ../SmartHouseTests-1.0.0/
 
 branches:
   only:
