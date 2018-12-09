@@ -2,6 +2,8 @@
 
 Хакатон **Nexign Hack 2018**. Тема QA.
 
+[![Build Status](https://travis-ci.org/DGKmaster/xgboosters.svg?branch=master)](https://travis-ci.org/DGKmaster/xgboosters)
+
 ---
 
 ## Структура проекта
