@@ -220,6 +220,11 @@ def test_double_sensosrs_(monitor_default):
     time.sleep(1)
     assert (2 == len(MessageHandler._sensors))
 
+    message2 = b'{"message_type":"unregister","payload":{"type":"router","id":"5", "status":"online"}}'
+    sock2.send(message2)
+    message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"4", "status":"online"}}'
+    sock1.send(message)
+
     monitor_default.stop(timeout=0)
 
 def test_monitor_empty_config(monitor_empty):
