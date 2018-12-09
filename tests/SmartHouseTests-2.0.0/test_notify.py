@@ -9,6 +9,7 @@ def test_check_notify_inet_state_2_0(monitor_default):
 
     with open('notification.log') as infile:
         counts1 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     i_router = Router({'id': 'router1', 'status': 'online'})
     i_router.register()
@@ -20,6 +21,7 @@ def test_check_notify_inet_state_2_0(monitor_default):
     time.sleep(1)
     with open('notification.log') as infile:
         counts2 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     assert (len(counts1) + 1 == len(counts2))
 
@@ -33,6 +35,7 @@ def test_check_notify_overheat_2_0(monitor_default):
 
     with open('notification.log') as infile:
         counts1 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     i_kettle = Kettle({'id': 'kettle1', 'status': 'online', 'kettle_state': 'off', 'temperature': 0})
     i_kettle.register()
@@ -44,6 +47,7 @@ def test_check_notify_overheat_2_0(monitor_default):
     time.sleep(1)
     with open('notification.log') as infile:
         counts2 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     assert (len(counts1) + 1 == len(counts2))
 
@@ -57,6 +61,7 @@ def test_check_notify_boil_2_0(monitor_default):
 
     with open('notification.log') as infile:
         counts1 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     i_kettle = Kettle({'id': 'kettle1', 'status': 'online', 'kettle_state': 'off', 'temperature': 0})
     i_kettle.register()
@@ -68,6 +73,7 @@ def test_check_notify_boil_2_0(monitor_default):
     time.sleep(1)
     with open('notification.log') as infile:
         counts2 = collections.Counter(l.strip() for l in infile)
+        infile.close()
 
     assert (len(counts1) + 1 == len(counts2))
 
