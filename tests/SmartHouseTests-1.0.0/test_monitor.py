@@ -6,7 +6,7 @@ from test_common import *
 # TESTS FOR VERSION 1.0.0
 ############################################################################
 # Windows: Success
-# Linux: Error
+# Linux: Sometimes
 def test_register_sensor(monitor_default):
     monitor_default
 
@@ -45,8 +45,8 @@ def test_unregister_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
+# Linux: Sometimes
 # Windows: Error
-# Linux: Error
 def test_status_sensor(monitor_default):
     monitor_default
 
@@ -68,7 +68,7 @@ def test_status_sensor(monitor_default):
 
 
 # Windows: Error sometimes
-# Linux: Error
+# Linux: Sometimes
 def test_status_from_online_to_offline_sensor(monitor_default):
     monitor_default
 
@@ -97,7 +97,7 @@ def test_status_from_online_to_offline_sensor(monitor_default):
 
 
 # Windows: Error sometimes
-# Linux: Error
+# Linux: Sometimes
 def test_update_sensor(monitor_default):
     monitor_default
 
@@ -203,6 +203,7 @@ def test_incorrect_id(monitor_default):
 
 
 # Windows: Error
+# Linux: Error
 def test_double_sensosrs_(monitor_default):
     monitor_default
 

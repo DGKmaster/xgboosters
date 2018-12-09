@@ -31,7 +31,7 @@
 ```
 2. Устанавливаем пакет в ```lib/python3.7/site-packages```
 ```bash
-~$ pip3 install dist/smarthouse-1.0.0.tar.gz
+~$ pip3 install smarthouse-1.0.0.tar.gz
 ```
 
 ---
