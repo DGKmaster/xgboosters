@@ -11,7 +11,7 @@ import pytest
 # Path to project code. Need to be changed in each version
 ############################################################################
 # Add the folder path to the sys.path list
-sys.path.append('../../code/SmartHouse-1.0.0/')
+sys.path.append('../../code/SmartHouse-1.1.0/')
 ############################################################################
 
 
@@ -74,6 +74,7 @@ class MonitorEmptyThread(object):
     # Stop executing monitor
     def stop(self, timeout):
         self._thread_a.join(timeout)
+
 
 # Monitor uses default settings
 @pytest.fixture()
