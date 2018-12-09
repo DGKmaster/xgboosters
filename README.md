@@ -45,6 +45,10 @@
 ~$ sudo apt install docker-ce
 ~$ sudo usermod -aG docker $(whoami)
 ~$ sudo docker pull ubuntu
+
+~$ docker build -t <repository name> <Dockerfile directory>
+
+~$ sudo docker run -it <image name> /bin/bash
 ```
 
 ---
