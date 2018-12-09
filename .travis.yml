@@ -11,23 +11,23 @@ cache: pip3
 
 services:
   - docker
+  - yaml
 
 before_install:
   - docker pull ubuntu
-  - docker run [params] <repository_name> [params] server /bin/bash
+  - docker build -t docker_1 .
 
 
 # Установка фактически разбита на два этапа: 
 # 1) python3 setup.py sdist создаёт архив, который заливается (руками) на dropbox
 # 2) из dropbox архив автоматически скачивается и устанавливается во время создания 
 # docker-контейнера
-install:
-    - pip3 install <?> 
 
 script:
-  - tests.py [??]
+  - pip3 install pytest
+  - cd tests/SmartHouseTests-1.0.0
+  - pytest ../SmartHouseTests-1.0.0/
 
-# 
 branches:
   only:
     - master

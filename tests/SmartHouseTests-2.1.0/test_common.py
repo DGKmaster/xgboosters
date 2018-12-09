@@ -5,13 +5,14 @@ import sys
 import socket
 import threading
 import pytest
+import collections
 ############################################################################
 
 
 # Path to project code. Need to be changed in each version
 ############################################################################
 # Add the folder path to the sys.path list
-sys.path.append('../../code/SmartHouse-1.0.0/')
+sys.path.append('../../code/SmartHouse-2.1.0/')
 ############################################################################
 
 
@@ -21,6 +22,7 @@ from monitor.monitor import MessageHandler
 from monitor.monitor import Monitor
 from monitor.message_service import MessageServer
 from monitor.config import Config
+from sensors import Kettle, Router, Fridge, PowerSupply
 ############################################################################
 
 
@@ -74,6 +76,7 @@ class MonitorEmptyThread(object):
     # Stop executing monitor
     def stop(self, timeout):
         self._thread_a.join(timeout)
+
 
 # Monitor uses default settings
 @pytest.fixture()
