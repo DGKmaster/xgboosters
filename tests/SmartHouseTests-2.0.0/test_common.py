@@ -11,7 +11,7 @@ import pytest
 # Path to project code. Need to be changed in each version
 ############################################################################
 # Add the folder path to the sys.path list
-sys.path.append('../../code/SmartHouse-1.1.0/')
+sys.path.append('../../code/SmartHouse-2.0.0/')
 ############################################################################
 
 
@@ -21,6 +21,7 @@ from monitor.monitor import MessageHandler
 from monitor.monitor import Monitor
 from monitor.message_service import MessageServer
 from monitor.config import Config
+from sensors import Kettle, Router, Fridge, PowerSupply
 ############################################################################
 
 

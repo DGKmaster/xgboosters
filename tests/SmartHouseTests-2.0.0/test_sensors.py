@@ -8,19 +8,14 @@ from test_common import *
 def test_register_sensor_1_1_kettle(monitor_default):
     monitor_default
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('localhost', 50101))
-    sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"off", "temperature": 0}}'
-    sock.send(message)
+    i_kettle = Kettle({'id': 'kettle1', 'status': 'online', 'kettle_state': 'off', 'temperature': 0})
+    i_kettle.register()
 
     time.sleep(2)
     assert (1 == len(MessageHandler._sensors))
 
-    message = b'{"message_type":"unregister","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"off", "temperature": 0}}'
-    sock.send(message)
+    i_kettle.unregister()
+    del i_kettle
 
     monitor_default.stop(timeout=0)
 
@@ -28,21 +23,14 @@ def test_register_sensor_1_1_kettle(monitor_default):
 def test_register_sensor_1_1_router(monitor_default):
     monitor_default
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('localhost', 50102))
-    sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"router",' \
-              b'"id":"router1", "status":"online",' \
-              b'"inet_state":"online", "in_traffic":10,"out_traffic":15}}'
-    sock.send(message)
+    i_router = Router({'id': 'router1', 'status': 'online'})
+    i_router.register()
 
     time.sleep(2)
     assert (1 == len(MessageHandler._sensors))
 
-    message = b'{"message_type":"unregister","payload":{"type":"router",' \
-              b'"id":"router1", "status":"online",' \
-              b'"inet_state":"online", "in_traffic":10,"out_traffic":15}}'
-    sock.send(message)
+    i_router.unregister()
+    del i_router
 
     monitor_default.stop(timeout=0)
     time.sleep(0.5)
@@ -117,16 +105,15 @@ def test_metrics_sensor_1_1_kettle_check(monitor_default):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('localhost', 50106))
     sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"off", "temperature": 0}}'
+    message = b'{"message_type":"register","payload":{"id":"kettle1","type":"kettle","status":"online", "kettle_state":"off", "temperature": 0}}'
     sock.send(message)
 
-    time.sleep(2)
+    time.sleep(1)
     assert ('off' == MessageHandler._sensors['kettle1'].kettle_state)
     assert (0 == MessageHandler._sensors['kettle1'].temperature)
 
-    message = b'{"message_type":"unregister","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"off", "temperature": 0}}'
+    message = b'{"message_type":"unregister","payload":{"id":"kettle1","type":"kettle","status":"online", "kettle_state":"off", "temperature": 0}}'
+
     sock.send(message)
 
     monitor_default.stop(timeout=0)
@@ -136,26 +123,22 @@ def test_metrics_sensor_1_1_kettle_check(monitor_default):
 def test_update_metrics_sensor_1_1_kettle_check(monitor_default):
     monitor_default
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('localhost', 50107))
-    sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"off", "temperature": 0}}'
-    sock.send(message)
+    i_kettle = Kettle({'id': 'kettle1', 'status': 'online', 'kettle_state': 'off', 'temperature': 0})
+    i_kettle.register()
+    time.sleep(1)
+    i_kettle.temperature = 110
+    i_kettle.send_update()
+    time.sleep(1)
+    i_kettle.kettle_state = 'boil'
+    i_kettle.send_update()
+
+    time.sleep(1)
+    assert ('boil' == MessageHandler._sensors['kettle1'].kettle_state)
+    assert (110 == MessageHandler._sensors['kettle1'].temperature)
 
 
-    time.sleep(2)
-    message = b'{"message_type":"update","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"on", "temperature": 50}}'
-    sock.send(message)
-
-    time.sleep(3)
-    assert ('on' == MessageHandler._sensors['kettle1'].kettle_state)
-    assert (50 == MessageHandler._sensors['kettle1'].temperature)
-
-    message = b'{"message_type":"unregister","payload":{"type":"kettle", ' \
-              b'"id":"kettle1", "status":"online", "kettle_state":"on", "temperature": 50}}'
-    sock.send(message)
+    i_kettle.unregister()
+    del i_kettle
 
     monitor_default.stop(timeout=0)
     time.sleep(0.5)
@@ -164,29 +147,18 @@ def test_update_metrics_sensor_1_1_kettle_check(monitor_default):
 def test_update_metrics_sensor_1_1_router_check(monitor_default):
     monitor_default
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('localhost', 50108))
-    sock.connect(('localhost', 50000))
-    message = b'{"message_type":"register","payload":{"type":"router",' \
-              b'"id":"router1", "status":"online",' \
-              b'"inet_state":"online", "in_traffic":10,"out_traffic":15}}'
-    sock.send(message)
+    i_router = Router({'id': 'router1', 'status': 'online'})
+    i_router.register()
 
-    time.sleep(2)
-    message = b'{"message_type":"update","payload":{"type":"router",' \
-              b'"id":"router1", "status":"online",' \
-              b'"inet_state":"offline", "in_traffic":0,"out_traffic":0}}'
-    sock.send(message)
+    time.sleep(1)
+    i_router.inet_state = 'online'
+    i_router.send_update()
 
-    time.sleep(3)
-    assert ('offline' == MessageHandler._sensors['router1'].inet_state)
-    assert (0 == MessageHandler._sensors['router1'].in_traffic)
-    assert (5 == MessageHandler._sensors['router1'].out_traffic)
+    time.sleep(1)
+    assert ('online' == MessageHandler._sensors['router1'].inet_state)
 
-    message = b'{"message_type":"unregister","payload":{"type":"router",' \
-              b'"id":"router1", "status":"online",' \
-              b'"inet_state":"online", "in_traffic":10,"out_traffic":15}}'
-    sock.send(message)
+    i_router.unregister()
+    del i_router
 
     monitor_default.stop(timeout=0)
     time.sleep(0.5)
