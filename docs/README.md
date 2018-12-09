@@ -19,9 +19,9 @@
 
 [Чек лист Google Sheet](https://docs.google.com/spreadsheets/d/1VZZB-7sY7WI-P3tP_qppYHqpB-3Z1KZNdOXkfF43mrE/edit?usp=sharing)
 
-[Unit кейсы Google Sheet](https://docs.google.com/spreadsheets/d/1VZZB-7sY7WI-P3tP_qppYHqpB-3Z1KZNdOXkfF43mrE/edit?usp=sharing)
+[Unit кейсы Google Sheet](https://docs.google.com/spreadsheets/d/1pbnKvy8O5kSRJCZrnYGBo_3NngHbWcGYBCPjX_vHOVE/edit?usp=sharing)
 
-[Динамика запуска тестов Google Sheet](https://docs.google.com/spreadsheets/d/1pbnKvy8O5kSRJCZrnYGBo_3NngHbWcGYBCPjX_vHOVE/edit?usp=sharing)
+[Динамика запуска тестов Google Sheet](https://docs.google.com/spreadsheets/d/1pbnKvy8O5kSRJCZrnYGBo_3NngHbWcGYBCPjX_vHOVE/edit#gid=1457635115)
 
 [Тест План Google Docs](https://docs.google.com/document/d/1nsW67zBxEjvgA9M4XVkPVQ4c8y_T1kD3X07IcZLUEmw/edit?usp=sharing)
 
