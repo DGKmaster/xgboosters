@@ -24,6 +24,7 @@ before_install:
 
 script:
   - pip3 install pytest
+  - apt install pyyaml
   - cd tests/SmartHouseTests-1.0.0
   - pytest ../SmartHouseTests-1.0.0/
 
