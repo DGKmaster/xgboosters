@@ -41,3 +41,6 @@ branches:
     - dgk
     - sergey
     - timur
+
+after_success:
+  - codecov
