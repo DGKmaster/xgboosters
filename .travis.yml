@@ -14,7 +14,7 @@ services:
 
 before_install:
   - docker pull ubuntu
-  - docker run [params] <repository_name> [params] server /bin/bash
+  - docker build -t docker_1 ~/
 
 
 # Установка фактически разбита на два этапа: 
