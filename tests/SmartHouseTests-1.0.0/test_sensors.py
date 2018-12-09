@@ -1,7 +1,11 @@
 from test_common import *
 
 
+############################################################################
+# TESTS FOR VERSION 1.0.0
+############################################################################
 # Windows: Success
+# Linux: Success
 def test_check_type_router(monitor_default):
     monitor_default
 
@@ -24,6 +28,7 @@ def test_check_type_router(monitor_default):
 
 
 # Windows: Success
+# Linux: Success
 def test_check_type_kettle(monitor_default):
     monitor_default
 
@@ -44,6 +49,7 @@ def test_check_type_kettle(monitor_default):
 
 
 # Windows: Error
+# Linux: Error
 def test_check_newtype(monitor_test):
     monitor_test
 
@@ -63,6 +69,7 @@ def test_check_newtype(monitor_test):
 
 
 # Windows: Error
+# Linux: Error
 def test_empty_type(monitor_default):
     monitor_default
 
@@ -82,6 +89,7 @@ def test_empty_type(monitor_default):
 
 
 # Windows: Error
+# Linux: Error
 def test_int_type(monitor_default):
     monitor_default
 
@@ -101,6 +109,7 @@ def test_int_type(monitor_default):
 
 
 # Windows: Success
+# Linux: Success
 def test_update_unreg_sensor(monitor_default):
     monitor_default
 
@@ -115,6 +124,7 @@ def test_update_unreg_sensor(monitor_default):
 
 
 # Windows: Success
+# Linux: Success
 def test_unreg_unreg_sensor(monitor_default):
     monitor_default
 
@@ -126,3 +136,4 @@ def test_unreg_unreg_sensor(monitor_default):
     sock.send(message)
 
     monitor_default.stop(timeout=0)
+############################################################################
