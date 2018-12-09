@@ -21,13 +21,10 @@ before_install:
 # 1) python3 setup.py sdist создаёт архив, который заливается (руками) на dropbox
 # 2) из dropbox архив автоматически скачивается и устанавливается во время создания 
 # docker-контейнера
-install:
-    - pip3 install <?> 
 
 script:
-  - tests.py [??]
+  - tests.py
 
-# 
 branches:
   only:
     - master
