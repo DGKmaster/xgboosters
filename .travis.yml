@@ -23,7 +23,8 @@ before_install:
 # docker-контейнера
 
 script:
-  - tests.py
+  - pip3 install pytest
+  - pytest SmartHouseTests-1.0.0/
 
 branches:
   only:
