@@ -22,7 +22,6 @@ from monitor.monitor import MessageHandler
 from monitor.monitor import Monitor
 from monitor.message_service import MessageServer
 from monitor.config import Config
-from sensors import Kettle, Router, Fridge, PowerSupply
 ############################################################################
 
 
