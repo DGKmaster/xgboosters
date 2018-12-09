@@ -6,7 +6,7 @@ DESCRIPTION = ""
 AUTHOR = "sgb"
 AUTHOR_EMAIL = ""
 URL = ""
-VERSION = "1.1.0"
+VERSION = "2.1.0"
  
 setup(
     name=NAME,
