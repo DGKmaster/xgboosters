@@ -2,3 +2,7 @@
 [WARN ][06.12.2018T17:02:11] Router router1 has no internet access. (address: ('127.0.0.1', 61129))
 [ALERT][06.12.2018T17:02:13] Kettle kettle1 overheat! (address: ('localhost', -1))
 [WARN ][06.12.2018T17:02:13] Kettle kettle1 is boiling. (address: ('localhost', -1))
+[ALERT][09.12.2018T11:52:48] Kettle kettle1 overheat! (address: ('localhost', -1))
+[WARN ][09.12.2018T11:52:48] Router router1 has no internet access. (address: ('127.0.0.1', 6378))
+[ALERT][09.12.2018T11:52:50] Kettle kettle1 overheat! (address: ('localhost', -1))
+[WARN ][09.12.2018T11:52:50] Kettle kettle1 is boiling. (address: ('localhost', -1))
