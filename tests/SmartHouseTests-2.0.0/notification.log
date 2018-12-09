@@ -1,0 +1,3 @@
+[WARN ][09.12.2018T13:15:34] Router router1 has no internet access. (address: ('127.0.0.1', 13799))
+[WARN ][09.12.2018T13:16:37] Router router1 has no internet access. (address: ('127.0.0.1', 13891))
+[ALERT][09.12.2018T13:18:09] Kettle kettle1 overheat! (address: ('localhost', -1))
