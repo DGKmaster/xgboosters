@@ -23,8 +23,8 @@ before_install:
 # docker-контейнера
 
 script:
-  - pip3 install pytest
   - apt install pyyaml
+  - pip3 install pytest
   - cd tests/SmartHouseTests-1.0.0
   - pytest ../SmartHouseTests-1.0.0/
 
