@@ -5,7 +5,7 @@ python:
 
 os:
   - linux
-  - windows
+#  - windows
 
 cache: pip3
 
