@@ -215,7 +215,7 @@ def test_double_sensosrs_(monitor_default):
     sock1.send(message)
 
     sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock2.bind(('', 50014))
+    sock2.bind(('', 50018))
     sock2.connect(('localhost', 50000))
 
     message2 = b'{"message_type":"register","payload":{"type":"router","id":"5", "status":"online"}}'
@@ -225,4 +225,21 @@ def test_double_sensosrs_(monitor_default):
     assert (2 == len(MessageHandler._sensors))
 
     monitor_default.stop(timeout=0)
+
+
+def test_monitor_empty_config(monitor_empty):
+    monitor_default
+
+    sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock1.bind(('', 50019))
+    sock1.connect(('localhost', 50000))
+
+    message = b'{"message_type":"register","payload":{"type":"kettle","id":"4", "status":"online"}}'
+    sock1.send(message)
+
+    time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
+
+    time.sleep(1)
+
 ############################################################################

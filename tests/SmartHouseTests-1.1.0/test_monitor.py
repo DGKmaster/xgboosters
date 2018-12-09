@@ -11,8 +11,8 @@ from test_common import *
 ############################################################################
 # TESTS FOR VERSION 1.0.0
 ############################################################################
-# Windows: Success
-# Linux: Error
+
+
 def test_register_sensor(monitor_default):
     monitor_default
 
@@ -31,8 +31,7 @@ def test_register_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Success
-# Linux: Success
+
 def test_unregister_sensor(monitor_default):
     monitor_default
 
@@ -51,8 +50,7 @@ def test_unregister_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Success
-# Linux: Error
+
 def test_status_sensor(monitor_default):
     monitor_default
 
@@ -73,8 +71,7 @@ def test_status_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Error sometimes
-# Linux: Error
+
 def test_status_from_online_to_offline_sensor(monitor_default):
     monitor_default
 
@@ -102,8 +99,7 @@ def test_status_from_online_to_offline_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Error sometimes
-# Linux: Error
+
 def test_update_sensor(monitor_default):
     monitor_default
 
@@ -128,8 +124,7 @@ def test_update_sensor(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Success
-# Linux: Sometimes
+
 def test_empty_message(monitor_default):
     monitor_default
 
@@ -146,8 +141,7 @@ def test_empty_message(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Success
-# Linux: Error
+
 def test_signed_register_id(monitor_default):
     monitor_default
 
@@ -167,8 +161,7 @@ def test_signed_register_id(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Success
-# Linux: Success
+
 def test_signed_unregister_id(monitor_default):
     monitor_default
 
@@ -190,8 +183,6 @@ def test_signed_unregister_id(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Error
-# Linux: Success
 def test_incorrect_id(monitor_default):
     monitor_default
 
@@ -208,7 +199,7 @@ def test_incorrect_id(monitor_default):
     monitor_default.stop(timeout=0)
 
 
-# Windows: Error
+
 def test_double_sensosrs_(monitor_default):
     monitor_default
 
@@ -220,7 +211,7 @@ def test_double_sensosrs_(monitor_default):
     sock1.send(message)
 
     sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock2.bind(('', 50014))
+    sock2.bind(('', 50018))
     sock2.connect(('localhost', 50000))
 
     message2 = b'{"message_type":"register","payload":{"type":"router","id":"5", "status":"online"}}'
@@ -229,5 +220,25 @@ def test_double_sensosrs_(monitor_default):
     time.sleep(1)
     assert (2 == len(MessageHandler._sensors))
 
+    message2 = b'{"message_type":"unregister","payload":{"type":"router","id":"5", "status":"online"}}'
+    sock2.send(message2)
+    message = b'{"message_type":"unregister","payload":{"type":"kettle","id":"4", "status":"online"}}'
+    sock1.send(message)
+
     monitor_default.stop(timeout=0)
+
+def test_monitor_empty_config(monitor_empty):
+    monitor_default
+
+    sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock1.bind(('', 50019))
+    sock1.connect(('localhost', 50000))
+
+    message = b'{"message_type":"register","payload":{"type":"kettle","id":"4", "status":"online"}}'
+    sock1.send(message)
+
+    time.sleep(1)
+    assert (1 == len(MessageHandler._sensors))
+
+    time.sleep(1)
 ############################################################################

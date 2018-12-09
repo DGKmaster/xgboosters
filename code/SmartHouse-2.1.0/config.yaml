@@ -1,0 +1,23 @@
+server:
+  address: "localhost:50000"
+clients:
+  - address: "localhost:50001"
+  - address: "localhost:50002"
+sensors:
+  - type: kettle
+    timeout: 8
+    notifications:
+      - type: alert
+        rule: "{temperature} > 100"
+        message: "Kettle {id} overheat! (address: {address})"
+      - type: warning
+        rule: "'{kettle_state}' == 'boil'"
+        message: "Kettle {id} is boiling. (address: {address})"
+  - type: router
+    timeout: 12
+    notifications:
+      - type: warning
+        rule: "'{inet_state}' == 'offline'"
+        message: "Router {id} has no internet access. (address: {address})"
+  - type: fridge
+    timeout: 12
