@@ -11,7 +11,6 @@ cache: pip3
 
 services:
   - docker
-  - yaml
 
 before_install:
   - docker pull ubuntu
@@ -23,8 +22,11 @@ before_install:
 # 2) из dropbox архив автоматически скачивается и устанавливается во время создания 
 # docker-контейнера
 
-script:
+install:
+  - pip3 install pyyaml
   - pip3 install pytest
+
+script:
   - cd tests/SmartHouseTests-1.0.0
   - pytest ../SmartHouseTests-1.0.0/
 
