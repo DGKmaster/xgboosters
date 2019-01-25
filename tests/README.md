@@ -1,3 +1,3 @@
-# Unit тесты приложения
+# App unit tests
 
-Здесь находятся все unit тесты приложения для каждой версии.
+Here unit tests for all app versions are located.
