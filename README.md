@@ -1,49 +1,52 @@
-# Команда xgboosters
+# Team xgboosters
 
-Хакатон **Nexign Hack 2018**. Тема QA.
+Hackathon **Nexign Hack 2018**. QA case.
 
 [![Build Status](https://travis-ci.org/DGKmaster/xgboosters.svg?branch=master)](https://travis-ci.org/DGKmaster/xgboosters)
 
 ---
 
-## Структура проекта
+## Project structure
 
 * **code**
-  * Исходный код проекта.
-  * В отдельной папке находится каждая из версий проекта.
-  * Есть отдельный README для описания функциональности.
+  * Project source code.
+  * Each project version is placed in a separate folder.
+  * Have separate readme for functionality description.
 * **docs**
-  * Весь вывод о тестировании проекта.
-  * Также эта страница отдельно хоститься на [Github pages](https://dgkmaster.github.io/xgboosters/)
+  * Output information about project testing.
+  * This page is also available on [Github page](https://dgkmaster.github.io/xgboosters/)
 * **run**
-  * Скрипты запуска программы.
+  * Scripts for program start.
 * **tests**
-  * Unit тесты для проверки программы.
-  * Для
+  * Unit tests for program check.
 * **docker**
-  * Папка с Dockerfile для автоматического создания контейнера.
-  * В контейнере будет установлено само приложение и его рабочее окружением.
+  * Folder with Dockerfile for automatic container creation.
+  * In container the app and its dependencies are installed.
 * **.travis.yml**
-  * Файл конфигурации для запуска Travis CI.
+  * Configuration file for Travis CI run.
 
 ---
 
-## Создание пакета
+## pip package creation
 
-1. Создаем пакет
+**1.** Create a packet
+
 ```bash
 ~$ python3 setup.py sdist
 ```
-2. Устанавливаем пакет в ```lib/python3.7/site-packages```
+
+**2.** Install packet in ```lib/python3.7/site-packages```
+
 ```bash
 ~$ pip3 install smarthouse-1.0.0.tar.gz
 ```
 
 ---
 
-## Получение начального docker контейнера для ОС Linux
+## Get initial Docker container for Linux OS
 
-Необходимо выполнить следующие команды в терминале
+Need to run next commands in terminal:
+
 ```bash
 ~$ sudo apt install docker-ce
 ~$ sudo usermod -aG docker $(whoami)
