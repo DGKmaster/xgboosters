@@ -25,8 +25,6 @@ Hackathon **Nexign Hack 2018**. QA case.
 * **.travis.yml**
   * Configuration file for Travis CI run.
 
----
-
 ## pip package creation
 
 **1.** Create a packet
@@ -41,8 +39,6 @@ Hackathon **Nexign Hack 2018**. QA case.
 ~$ pip3 install smarthouse-1.0.0.tar.gz
 ```
 
----
-
 ## Get initial Docker container for Linux OS
 
 Need to run next commands in terminal:
@@ -56,5 +52,3 @@ Need to run next commands in terminal:
 
 ~$ sudo docker run -it <image name> /bin/bash
 ```
-
----
